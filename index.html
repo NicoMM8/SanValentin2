@@ -28,7 +28,8 @@
         /* Resto de los estilos */
     </style>
 </head>
-<body>
+<body><button id="miBoton" style="display: none;">Haz clic aquí</button>
+
     <div id="creditos">
         Made by Nicolás Muñoz Miguel ©
     </div>
@@ -164,12 +165,15 @@ function drawText() {
         opacity = opacity - 0.01;
     }
 
-    if(frameNumber >= 3000 && frameNumber < 99999){
+    if(frameNumber >= 2000 && frameNumber < 99999){
         context.fillStyle = `rgba(138, 43, 226, ${thirdOpacity})`;
         context.fillText("FELIZ DÍA DE SAN VALENTÍN", canvas.width/2, (canvas.height/2 + 120));
         thirdOpacity = thirdOpacity + 0.01;
+        document.getElementById('miBoton').style.display = 'block';
 
-    }   
+    }  
+    document.getElementById('miBoton').addEventListener('click', function() {
+    window.location.href = 'https://nicomm8.github.io/SanValentin2/';
 
      // Reset the shadow effect after drawing the text
      context.shadowColor = "transparent";
