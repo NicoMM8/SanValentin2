@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Feliz Día De San Valentín</title>
+
+    <style>
+        body{
+            background-color: aquamarine;
+        }
+
+        #creditos {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: small;
+        }
+
+        .painel{
+            margin: auto;
+            background-color: beige;
+            width: 500px;
+            height: 500px;
+            border-radius: 20px;
+            text-align: center;
+            padding-top: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        #si{
+            position: absolute;
+            height: 40px;
+            width: 60px;
+            background-color: blueviolet;
+            border: 2px solid white;
+            border-radius: 10px;
+            color: white;
+        }
+
+        #no{
+            position: absolute; /* Añade esta línea */
+            height: 40px;
+            width: 60px;
+            background-color: blueviolet;
+            border: 2px solid white;
+            border-radius: 10px;
+            color: white;
+            margin-left: 70px;
+        }
+
+        #imagenTriste {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #mensajeTriste {
+            display: none;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: red;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="painel">
+        <h1>Mariangel mi amor..</h1>
+        <h2>¿Te gustaría ser mi San Valentín?</h2>
+
+        <a href="https://nicomm8.github.io/SanValentin2/"><button id="si" onclick="resultado()"> Sí!! </button></a>
+        <button onmousemove="fuja()" id="no"> No... </button>
+
+        <img src="https://fotocov.com/wp-content/uploads/2021/10/corazon-de-oso-dibujos-stickers-animados.gif" alt="">
+    </div>
+
+    <img id="imagenTriste" src="https://labradores.org/wp-content/uploads/2021/05/Tristeza-en-los-Perros.jpg" alt="Imagen triste">
+    <p id="mensajeTriste">Que mal, no me quieres :(</p>
+    
+    <div id="creditos">
+        Made by Nicolás Muñoz Miguel ©
+    </div>
+
+    <script>
+
+        var contador = 0; // Añade un contador
+
+        function fuja(){
+            var moverNo = document.getElementById("no")
+
+            var largura = window.innerWidth;
+            var altura = window.innerHeight;
+
+            var maxX = largura- moverNo.offsetWidth;
+            var maxY = altura - moverNo.offsetHeight
+
+            var aleatorioX = Math.floor(Math.random() * maxX);
+            var aleatorioY = Math.floor(Math.random() * maxY);
+
+            moverNo.style.left = aleatorioX + "px";
+            moverNo.style.top = aleatorioY + "px"; 
+
+            contador++; // Incrementa el contador cada vez que se llama a la función
+
+            if(contador >= 14){ // Si el contador llega a 14, esconde el botón
+                moverNo.style.display = "none";
+                var imagenTriste = document.getElementById("imagenTriste");
+                var mensajeTriste = document.getElementById("mensajeTriste");
+
+                imagenTriste.style.display = "block";
+                mensajeTriste.style.display = "block";
+
+                setTimeout(function(){
+                    imagenTriste.style.display = "none";
+                    mensajeTriste.style.display = "none";
+                }, 5000);
+            }
+        }
+
+        function resultado(){
+        alert("Enhorabuena por elegirme, te amo :)")
+    }
+    </script>
+
+
+</body>
+</html>
