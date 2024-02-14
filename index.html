@@ -34,7 +34,7 @@
         Made by Nicolás Muñoz Miguel ©
     </div>
     
-    <audio autoplay muted>
+    <audio control autoplay >
         <source src="cancion.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
       </audio>
@@ -92,6 +92,27 @@ function updateStars() {
     }
 }
 
+const button = document.getElementById("valentinesButton");
+
+button.addEventListener("click", () => {
+  if (button.textContent === "Click Me! ❤") {
+    button.textContent = "loading...";
+    fetch('regalo.html')
+      .then(response => {
+        if (response.ok) {
+          button.textContent = "Check Your Email 🙃";
+        } else {
+          console.error('Failed to send email');
+          button.textContent = "Error 😞";
+        }
+      })
+      .catch(error => {
+        // Handle network errors or other issues
+        console.error('Error:', error);
+        button.textContent = "Error 😞";
+      });
+  }
+});
 
 function drawTextWithLineBreaks(lines, x, y, fontSize, lineHeight) {
     lines.forEach((line, index) => {
@@ -169,8 +190,7 @@ function drawText() {
         context.fillStyle = `rgba(138, 43, 226, ${thirdOpacity})`;
         context.fillText("FELIZ DÍA DE SAN VALENTÍN", canvas.width/2, (canvas.height/2 + 120));
         thirdOpacity = thirdOpacity + 0.01;
-        <button id="miBoton" style="display: none;">Haz clic aquí</button>
-        document.getElementById('miBoton').style.display = 'block';
+        button.style.display = "block";
 
     }  
     document.getElementById('miBoton').addEventListener('click', function() {
