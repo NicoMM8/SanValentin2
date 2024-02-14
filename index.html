@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Vuelva el 14 de Febrero</title>
-
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+        rel="stylesheet"
+        media="screen and (max-width:768px)"
+        href="css/mobile.css"
+    />
+    <title>✨San Valentin | Bienvenida</title>
     <style>
         body {
-            background-color: aquamarine;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            position: relative;
-        }
-
-        h1 {
-            font-size: 3em;
-            color: blueviolet;
-            text-shadow: 2px 2px white;
-        }
-
-        h5 {
-            font-size: 20px;
-            color: rose;
-            text-shadow: 1px 1px white;
+            background: #000;
+            color: #fff;
+            /* Resto de los estilos */
         }
 
         #creditos {
@@ -36,13 +24,182 @@
             right: 10px;
             font-size: small;
         }
+       
+        /* Resto de los estilos */
     </style>
 </head>
 <body>
-    <h1>Vuelva el 14 de Febrero...</h1>
-    <h5>Pero después del examen que sino te entretienees jejej</h5>
     <div id="creditos">
         Made by Nicolás Muñoz Miguel ©
     </div>
+    
+    <audio autoplay muted>
+        <source src="cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+
+    <canvas id="starfield"></canvas>
+    <!-- Resto del contenido -->
+    <script>
+        var canvas = document.getElementById("starfield");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+var context = canvas.getContext("2d");
+var stars = 500;
+var colorrange = [0, 60, 240];
+var starArray = [];
+
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Initialize stars with random opacity values
+for (var i = 0; i < stars; i++) {
+    var x = Math.random() * canvas.offsetWidth;
+    var y = Math.random() * canvas.offsetHeight;
+    var radius = Math.random() * 1.2;
+    var hue = colorrange[getRandom(0, colorrange.length - 1)];
+    var sat = getRandom(50, 100);
+    var opacity = Math.random();
+    starArray.push({ x, y, radius, hue, sat, opacity });
+}
+
+var frameNumber = 0;
+var opacity = 0;
+var secondOpacity = 0;
+var thirdOpacity = 0;
+
+var baseFrame = context.getImageData(0, 0, window.innerWidth, window.innerHeight);
+
+function drawStars() {
+    for (var i = 0; i < stars; i++) {
+        var star = starArray[i];
+
+        context.beginPath();
+        context.arc(star.x, star.y, star.radius, 0, 360);
+        context.fillStyle = "hsla(" + star.hue + ", " + star.sat + "%, 88%, " + star.opacity + ")";
+        context.fill();
+    }
+}
+
+function updateStars() {
+    for (var i = 0; i < stars; i++) {
+        if (Math.random() > 0.99) {
+            starArray[i].opacity = Math.random();
+        }
+    }
+}
+
+
+function drawTextWithLineBreaks(lines, x, y, fontSize, lineHeight) {
+    lines.forEach((line, index) => {
+        context.fillText(line, x, y + index * (fontSize + lineHeight));
+    });
+}
+
+function drawText() {
+    var fontSize = Math.min(30, window.innerWidth / 24); // Adjust font size based on screen width
+    var lineHeight = 8;
+
+    context.font = fontSize + "px Franklin Gothic Medium";
+    context.textAlign = "center";
+    
+    // glow effect
+    context.shadowColor = "rgba(138, 43, 226, 1)";
+    context.shadowBlur = 8;
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;
+
+    if(frameNumber < 250){
+        context.fillStyle = `rgba(138, 43, 226, ${opacity})`;
+        context.fillText("Mariangel, gracias por llegar hasta aquí", canvas.width/2, canvas.height/2);
+        opacity = opacity + 0.01;
+    }
+    //fades out the text by decreasing the opacity
+    if(frameNumber >= 250 && frameNumber < 500){
+        context.fillStyle = `rgba(138, 43, 226, ${opacity})`;
+        context.fillText("Mariangel, gracias por llegar hasta aquí", canvas.width/2, canvas.height/2);
+        opacity = opacity - 0.01;
+    }
+
+    //needs this if statement to reset the opacity before next statement on canvas
+    if(frameNumber == 500){
+        opacity = 0;
+    }
+    if(frameNumber > 500 && frameNumber < 750){
+        context.fillStyle = `rgba(138, 43, 226, ${opacity})`;
+
+        if (window.innerWidth < 600) {           //shortens long sentence for mobile screens
+            drawTextWithLineBreaks(["no sabes lo agradecido que estoy a diario de haberte conocido"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("no sabes lo agradecido que estoy a diario de haberte conocido", canvas.width/2, canvas.height/2);
+        }
+
+        opacity = opacity + 0.01;
+    }
+    if(frameNumber >= 750 && frameNumber < 1000){
+        context.fillStyle = `rgba(138, 43, 226, ${opacity})`;
+        
+        if (window.innerWidth < 600) {
+            drawTextWithLineBreaks(["entre millones y millones de estrellas"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+        } else {
+            context.fillText("entre millones y millones de estrellas", canvas.width/2, canvas.height/2);
+        }
+
+        opacity = opacity - 0.01;
+    }
+
+    if(frameNumber == 1000){
+        opacity = 0;
+    }
+    if(frameNumber > 1000 && frameNumber < 1250){
+        context.fillStyle = `rgba(138, 43, 226, ${opacity})`;
+        context.fillText("entre billones y billones de estrellas", canvas.width/2, canvas.height/2);
+        opacity = opacity + 0.01;
+    }
+    if(frameNumber >= 1250 && frameNumber < 1500){
+        context.fillStyle = `rgba(138, 43, 226, ${opacity})`;
+        context.fillText("entre billones y billones de estrellas", canvas.width/2, canvas.height/2);
+        opacity = opacity - 0.01;
+    }
+
+    if(frameNumber >= 3000 && frameNumber < 99999){
+        context.fillStyle = `rgba(138, 43, 226, ${thirdOpacity})`;
+        context.fillText("FELIZ DÍA DE SAN VALENTÍN", canvas.width/2, (canvas.height/2 + 120));
+        thirdOpacity = thirdOpacity + 0.01;
+
+    }   
+
+     // Reset the shadow effect after drawing the text
+     context.shadowColor = "transparent";
+     context.shadowBlur = 0;
+     context.shadowOffsetX = 0;
+     context.shadowOffsetY = 0;
+}
+
+function draw() {
+    context.putImageData(baseFrame, 0, 0);
+
+    drawStars();
+    updateStars();
+    drawText();
+
+    if (frameNumber < 99999) {
+        frameNumber++;
+    }
+    window.requestAnimationFrame(draw);
+}
+
+window.addEventListener("resize", function () {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    baseFrame = context.getImageData(0, 0, window.innerWidth, window.innerHeight);
+});
+
+window.requestAnimationFrame(draw);
+
+    
+    </script>
 </body>
 </html>
