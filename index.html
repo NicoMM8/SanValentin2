@@ -169,17 +169,8 @@ function drawText() {
         context.fillStyle = `rgba(138, 43, 226, ${thirdOpacity})`;
         context.fillText("FELIZ DÍA DE SAN VALENTÍN", canvas.width/2, (canvas.height/2 + 120));
         thirdOpacity = thirdOpacity + 0.01;
-        button.style.display = "block";
 
     }  
-    document.getElementById('miBoton').addEventListener('click', function() {
-    window.location.href = 'https://nicomm8.github.io/SanValentin2/';
-
-     // Reset the shadow effect after drawing the text
-     context.shadowColor = "transparent";
-     context.shadowBlur = 0;
-     context.shadowOffsetX = 0;
-     context.shadowOffsetY = 0;
 }
 
 function draw() {
